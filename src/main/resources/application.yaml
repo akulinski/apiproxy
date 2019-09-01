@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      config:
+        enabled: true
+        prefix: config
+        defaultContext: application
+        data-key: data
+        profileSeparator: '::'
+        format: yaml
+
+
+zuul:
+  ignored-patterns: /actuator/**
+  routes:
+    product:
+      path: /keyauth/**
+      serviceId: keyauthservice
+      stripPrefix: true
+
+
+    whoAmI:
+      path: /keygenservice/**
+      serviceId: keygenerationservice
+      stripPrefix: true
+      sensitiveHeaders:
+
+
+server:
+  port: 8000
